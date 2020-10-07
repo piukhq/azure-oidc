@@ -43,7 +43,9 @@ class OIDCBearerTokenValidator:
     def validate_bearer_token(self, token: str) -> dict:
         try:
             jwt = JWT(
-                jwt=token, key=self._jwks, check_claims={"aud": self._config.audience, "iss": self._config.issuer}
+                jwt=token,
+                key=self._jwks,
+                check_claims={"aud": self._config.audience, "iss": self._config.issuer},
             )
         except Exception as ex:
             raise self.ValidationError from ex

@@ -42,7 +42,10 @@ def create_falcon_app() -> t.Any:
 
 def create_flask_app() -> t.Any:
     from flask import Flask, request
-    from azure_oidc.integrations.flask_decorator import FlaskOIDCAuthDecorator, HTTPUnauthorized
+    from azure_oidc.integrations.flask_decorator import (
+        FlaskOIDCAuthDecorator,
+        HTTPUnauthorized,
+    )
 
     requires_auth = FlaskOIDCAuthDecorator(config)
 
@@ -70,7 +73,9 @@ class AppType(Enum):
 
 
 def create_app(app_type: AppType) -> t.Any:
-    return {AppType.FALCON: create_falcon_app, AppType.FLASK: create_flask_app}[app_type]()
+    return {AppType.FALCON: create_falcon_app, AppType.FLASK: create_flask_app}[
+        app_type
+    ]()
 
 
 def serve_app(app):
@@ -80,7 +85,11 @@ def serve_app(app):
 
 
 @click.command()
-@click.option("--apptype", type=click.Choice([at.value for at in AppType]), default=AppType.FALCON.value)
+@click.option(
+    "--apptype",
+    type=click.Choice([at.value for at in AppType]),
+    default=AppType.FALCON.value,
+)
 def serve(apptype: AppType):
     serve_app(create_app(AppType(apptype)))
 

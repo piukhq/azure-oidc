@@ -1,0 +1,29 @@
+stages:
+  - tests
+  - build
+
+complexity:
+  stage: tests
+  script:
+    - xenon --max-average A --max-modules B --max-absolute B .
+
+style:
+  stage: tests
+  script:
+    - flake8 && black --check .
+
+type-check:
+  stage: tests
+  script:
+    - mypy --ignore-missing-imports azure_oidc
+
+build:
+  stage: build
+  image: binkhq/python:3.8
+  script:
+    - pip install twine
+    - python setup.py sdist bdist
+    - twine check dist/*
+    - twine upload --non-interactive --disable-progress-bar --repository-url https://pypi.tools.bink.sh/simple/ dist/*
+  only:
+    - tags

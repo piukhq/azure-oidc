@@ -13,7 +13,10 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = "azure-oidc"
-DESCRIPTION = "Provides a way to put Azure AD bearer token authentication in front of flask and falcon APIs."
+DESCRIPTION = (
+    "Provides a way to put Azure AD bearer token authentication "
+    "in front of flask and falcon APIs."
+)
 URL = "https://git.bink.com/libs/azure-oidc"
 EMAIL = "cl@bink.com"
 AUTHOR = "Chris Latham"
@@ -121,5 +124,5 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     # $ setup.py publish support.
-    cmdclass={"upload": UploadCommand,},
+    cmdclass={"upload": UploadCommand},
 )

@@ -23,14 +23,20 @@ class FlaskOIDCAuthDecorator:
                 try:
                     auth_header = request.headers["AUTHORIZATION"]
                 except KeyError as ex:
-                    raise HTTPUnauthorized(description="Authorization header is required but was not provided") from ex
+                    raise HTTPUnauthorized(
+                        description=(
+                            "Authorization header is required but was not provided"
+                        )
+                    ) from ex
 
                 nonlocal auth_scopes
                 if isinstance(auth_scopes, str):
                     auth_scopes = (auth_scopes,)
 
                 try:
-                    self._authenticator.authenticate(auth_header, auth_scopes=auth_scopes)
+                    self._authenticator.authenticate(
+                        auth_header, auth_scopes=auth_scopes
+                    )
                 except AzureADAuth.AuthError as ex:
                     raise HTTPUnauthorized(description=ex.args[0]) from ex
 

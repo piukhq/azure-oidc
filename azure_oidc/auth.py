@@ -20,15 +20,18 @@ class AzureADAuth:
 
         if _get_validator.cache_info().currsize > 1:
             logging.getLogger("azure AD auth").warning(
-                "_get_validator cache size > 1; avoid creating more than one instance of OIDCConfig "
-                "in your application to reduce calls to the Azure JWKs endpoint"
+                "_get_validator cache size > 1; avoid creating more than one instance "
+                "of OIDCConfig in your application to reduce calls to the Azure JWKs "
+                "endpoint"
             )
 
     def authenticate(self, auth_header: str, *, auth_scopes: t.Iterable[str] = []):
         try:
             auth_type, token = auth_header.split()
         except ValueError as ex:
-            raise AzureADAuth.AuthError("Authorization header must have two parts separated by whitespace") from ex
+            raise AzureADAuth.AuthError(
+                "Authorization header must have two parts separated by whitespace"
+            ) from ex
 
         if auth_type.lower() != "bearer":
             raise AzureADAuth.AuthError('Authorization header must begin with "Bearer"')

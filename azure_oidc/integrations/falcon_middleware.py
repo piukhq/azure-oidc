@@ -9,7 +9,9 @@ class FalconOIDCAuthMiddleware:
     def __init__(self, oidc_config: OIDCConfig):
         self._authenticator = AzureADAuth(oidc_config)
 
-    def process_resource(self, req: falcon.Request, resp: falcon.Response, resource: object, params: dict):
+    def process_resource(
+        self, req: falcon.Request, resp: falcon.Response, resource: object, params: dict
+    ):
         # allow disabling auth on a resource with `auth_disable = True`
         if getattr(resource, "auth_disable", False) is True:
             return
@@ -17,7 +19,9 @@ class FalconOIDCAuthMiddleware:
         try:
             auth_header = req.headers["AUTHORIZATION"]
         except KeyError as ex:
-            raise falcon.HTTPUnauthorized(description="Authorization header is required but was not provided") from ex
+            raise falcon.HTTPUnauthorized(
+                description="Authorization header is required but was not provided"
+            ) from ex
 
         auth_scopes: t.Iterable = getattr(resource, "auth_scopes", ())
         if isinstance(auth_scopes, str):
