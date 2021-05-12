@@ -21,7 +21,7 @@ URL = "https://git.bink.com/libs/azure-oidc"
 EMAIL = "cl@bink.com"
 AUTHOR = "Chris Latham"
 REQUIRES_PYTHON = ">=3.8.0"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 # What packages are required for this module to be executed?
 REQUIRED = ["requests", "jwcrypto"]

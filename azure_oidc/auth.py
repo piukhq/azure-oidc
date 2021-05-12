@@ -41,10 +41,13 @@ class AzureADAuth:
         except self._validator.ValidationError as ex:
             raise AzureADAuth.AuthError("JWT failed validation") from ex
 
-        claimed_scopes = claims["scp"].split()
-        missing_scopes = [scope for scope in auth_scopes if scope not in claimed_scopes]
-        if missing_scopes:
-            raise AzureADAuth.AuthError(
-                "Not all required scopes are present. "
-                f"Expected {','.join(auth_scopes)}, got {', '.join(claimed_scopes)}"
-            )
+        if auth_scopes:
+            claimed_scopes = claims["scp"].split()
+            missing_scopes = [
+                scope for scope in auth_scopes if scope not in claimed_scopes
+            ]
+            if missing_scopes:
+                raise AzureADAuth.AuthError(
+                    "Not all required scopes are present. "
+                    f"Expected {','.join(auth_scopes)}, got {', '.join(claimed_scopes)}"
+                )
