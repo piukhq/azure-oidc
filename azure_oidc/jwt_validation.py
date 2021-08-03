@@ -2,6 +2,7 @@ import json
 import logging
 
 import requests
+
 from jwcrypto.jwk import JWKSet
 from jwcrypto.jwt import JWT
 

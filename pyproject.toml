@@ -1,0 +1,77 @@
+[tool.poetry]
+name = "azure-oidc"
+version = "1.0.0"
+description = "Provides a way to put Azure AD bearer token authentication in front of flask and falcon APIs"
+authors = ["Bink <bink@bink.bink>"]
+readme = "README.md"
+repository = "https://git.bink.com/libs/azure-oidc"
+keywords = ["oidc", "azure", "flask", "falcon"]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+]
+packages = [
+    { include = "azure_oidc" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "*"
+jwcrypto = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-cov = "*"
+flake8 = "*"
+black = "*"
+isort = "*"
+mypy = "*"
+xenon = "*"
+safety = "*"
+types-requests = "*"
+types-redis = "*"
+Werkzeug = "*"
+Flask = "*"
+falcon = "*"
+click = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+# Default pattern forces v prefix
+pattern = "^v?(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?(\\+(?P<tagged_metadata>.+))?$"
+
+[tool.poetry-dynamic-versioning.substitution]
+files = ["azure_oidc/__init__.py"]
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 120
+skip_gitignore = false
+lines_between_types = 1
+
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]

@@ -1,10 +1,11 @@
 import logging
 import typing as t
+
 from enum import Enum
 
-from azure_oidc import OIDCConfig
-
 import click
+
+from azure_oidc import OIDCConfig
 
 LOG_FORMAT = "%(asctime)s | %(levelname)8s | %(name)s\n%(message)s"
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
@@ -19,6 +20,7 @@ config = OIDCConfig(
 
 def create_falcon_app() -> t.Any:
     import falcon
+
     from azure_oidc.integrations.falcon_middleware import FalconOIDCAuthMiddleware
 
     class Echo:
@@ -42,10 +44,8 @@ def create_falcon_app() -> t.Any:
 
 def create_flask_app() -> t.Any:
     from flask import Flask, request
-    from azure_oidc.integrations.flask_decorator import (
-        FlaskOIDCAuthDecorator,
-        HTTPUnauthorized,
-    )
+
+    from azure_oidc.integrations.flask_decorator import FlaskOIDCAuthDecorator, HTTPUnauthorized
 
     requires_auth = FlaskOIDCAuthDecorator(config)
 
@@ -73,9 +73,7 @@ class AppType(Enum):
 
 
 def create_app(app_type: AppType) -> t.Any:
-    return {AppType.FALCON: create_falcon_app, AppType.FLASK: create_flask_app}[
-        app_type
-    ]()
+    return {AppType.FALCON: create_falcon_app, AppType.FLASK: create_flask_app}[app_type]()
 
 
 def serve_app(app):
