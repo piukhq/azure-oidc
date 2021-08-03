@@ -26,7 +26,7 @@ class AzureADAuth:
                 "endpoint"
             )
 
-    def authenticate(self, auth_header: str, *, auth_scopes: t.Iterable[str] = []):
+    def authenticate(self, auth_header: str, *, auth_scopes: t.Iterable[str] = []) -> None:
         try:
             auth_type, token = auth_header.split()
         except ValueError as ex:

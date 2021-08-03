@@ -17,10 +17,10 @@ class FlaskOIDCAuthDecorator:
     def __init__(self, oidc_config: OIDCConfig):
         self._authenticator = AzureADAuth(oidc_config)
 
-    def __call__(self, *, auth_scopes: t.Union[str, t.Tuple[()], t.Tuple[str]] = ()):
+    def __call__(self, *, auth_scopes: t.Union[str, t.Tuple[()], t.Tuple[str]] = ()):  # type: ignore
         def decorator(view_func: t.Callable) -> t.Callable:
             @wraps(view_func)
-            def wrapper(*args, **kwargs):
+            def wrapper(*args, **kwargs):  # type: ignore
                 try:
                     auth_header = request.headers["AUTHORIZATION"]
                 except KeyError as ex:
