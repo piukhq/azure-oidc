@@ -1,5 +1,6 @@
 import logging
 import typing as t
+
 from functools import lru_cache
 
 from .config import OIDCConfig
@@ -29,9 +30,7 @@ class AzureADAuth:
         try:
             auth_type, token = auth_header.split()
         except ValueError as ex:
-            raise AzureADAuth.AuthError(
-                "Authorization header must have two parts separated by whitespace"
-            ) from ex
+            raise AzureADAuth.AuthError("Authorization header must have two parts separated by whitespace") from ex
 
         if auth_type.lower() != "bearer":
             raise AzureADAuth.AuthError('Authorization header must begin with "Bearer"')
@@ -43,9 +42,7 @@ class AzureADAuth:
 
         if auth_scopes:
             claimed_scopes = claims["scp"].split()
-            missing_scopes = [
-                scope for scope in auth_scopes if scope not in claimed_scopes
-            ]
+            missing_scopes = [scope for scope in auth_scopes if scope not in claimed_scopes]
             if missing_scopes:
                 raise AzureADAuth.AuthError(
                     "Not all required scopes are present. "

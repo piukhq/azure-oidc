@@ -1,4 +1,5 @@
 import typing as t
+
 from functools import wraps
 
 from flask import request
@@ -24,9 +25,7 @@ class FlaskOIDCAuthDecorator:
                     auth_header = request.headers["AUTHORIZATION"]
                 except KeyError as ex:
                     raise HTTPUnauthorized(
-                        description=(
-                            "Authorization header is required but was not provided"
-                        )
+                        description=("Authorization header is required but was not provided")
                     ) from ex
 
                 nonlocal auth_scopes
@@ -34,9 +33,7 @@ class FlaskOIDCAuthDecorator:
                     auth_scopes = (auth_scopes,)
 
                 try:
-                    self._authenticator.authenticate(
-                        auth_header, auth_scopes=auth_scopes
-                    )
+                    self._authenticator.authenticate(auth_header, auth_scopes=auth_scopes)
                 except AzureADAuth.AuthError as ex:
                     raise HTTPUnauthorized(description=ex.args[0]) from ex
 
